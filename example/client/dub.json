@@ -6,5 +6,8 @@
 	],
 	"copyright": "Copyright © 2018, Patric",
 	"name": "client",
-	"targetType": "dynamicLibrary"
+	"targetType": "dynamicLibrary",
+	"sourceFiles": [
+		"client.def"
+	]
 }

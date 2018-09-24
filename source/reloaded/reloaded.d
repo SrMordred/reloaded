@@ -51,16 +51,16 @@ struct Reloaded
 
     void load(T)(string lib_path, auto ref T userdata)
     {
-        import std.path : baseName, extension;
+        import std.path : stripExtension, extension;
         this.lib_path = lib_path;
         this.userdata = cast(void*)&userdata;
 		fw = FileWatch(lib_path);
 
-        auto base = lib_path.baseName;
+        auto base = lib_path.stripExtension;
         auto ext  = lib_path.extension;
 
-        lib_swaps[0] = base ~ "0." ~ ext;
-        lib_swaps[1] = base ~ "1." ~ ext;
+        lib_swaps[0] = base ~ "0" ~ ext;
+        lib_swaps[1] = base ~ "1" ~ ext;
 
         loadLib!(Yes.FirstTime);
     }
@@ -123,7 +123,11 @@ struct Reloaded
 		copy(lib_path, lib_tmp);
 
         if( lib.isLoaded )
+        {
 			lib.unload;
+            //DTOR unload;
+        }
+
 		lib.load( [lib_tmp] );
 
         //TEST ALL FUNCTIONS
@@ -164,8 +168,8 @@ struct Reloaded
 
         }
 
-        auto remove_lib_tmp = lib_swaps[cast(size_t)lib_swaps_v];
-		if( remove_lib_tmp.exists )
-			remove_lib_tmp.remove;
+        // auto remove_lib_tmp = lib_swaps[cast(size_t)lib_swaps_v];
+		// if( remove_lib_tmp.exists )
+		// 	remove_lib_tmp.remove;
     }
 }
