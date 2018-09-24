@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+host.so
+host.dylib
+host.dll
+host.a
+host.lib
+host-test-*
+*.exe
+*.o
+*.obj
+*.lst

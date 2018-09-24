@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+reloaded.so
+reloaded.dylib
+reloaded.dll
+reloaded.a
+reloaded.lib
+reloaded-test-*
+*.exe
+*.o
+*.obj
+*.lst
+*.dll

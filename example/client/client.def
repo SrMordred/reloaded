@@ -1,0 +1,8 @@
+LIBRARY client
+
+EXPORTS
+    init
+    uninit
+    load
+    unload
+    update

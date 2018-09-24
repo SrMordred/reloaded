@@ -1,0 +1,10 @@
+{
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"authors": [
+		"Patric"
+	],
+	"copyright": "Copyright © 2018, Patric",
+	"name": "client",
+	"targetType": "dynamicLibrary"
+}

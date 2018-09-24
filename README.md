@@ -1,15 +1,15 @@
-# Reloaded
+# ReloadeD
 
-Reloaded is a simple library for live code reloading.
+**ReloadeD** is a simple library for live code reloading based on dynamic libraries.
 
-Reloaded is on experimental stage and have been tested only on windows.
+**ReloadeD** is on experimental stage and have been tested only on windows.
 
-### Show And Tell
+## Show And Tell
 
-ReloadeD works with a simple Host application, and a Client Library.
+**ReloadeD** works with a simple Host application, and a Client Library.
 
 ```d
-#HOST APPLICATION
+//HOST APPLICATION
 
 struct Data
 {
@@ -29,34 +29,42 @@ void main()
     script.load("path/lib.dll", userdata );
 
     /*
-    update() will call the method with same name at the client side and will reload
-    the library when changes.
+    update() will call the method with same name at the client side and will reload the library when it changes automatically(and will call load()/unload() when necessary).
     */
 
     while(true)
     {
         script.update();
-        //see the data change here
+        //see the data changed by the client here
         writeln(data);
     }
 }
 ```
 
 The client can be used with 5 functions:
-´void init(void*)´ and ´void uninit(void*)´
-Will be called on the first lib load and when the host is destroyed.
 
-´void load(void*)´ and ´void unload(void*)´
-Will be called once every time the client changes
+`void init(void*)` and `void uninit(void*)`
 
-´void update()´
-Can be called at will on the host side (normally around a loop)
+Will be called on the first lib load and when the host is destroyed(or you change the lib path).
+It receive the userdata;
 
-Note that you don´t need Reloaded module on the client side
+`void load(void*)` and `void unload(void*)`
+
+Will be called once every time the client changes.
+It receive the userdata;
+
+
+`void update()`
+
+Can be called at will on the host side (normally inside a loop).
+
+**ReloadeD** will continue to work even if you don´t declare all possible functions.
+
+Note that you don´t need **Reloaded** module on the client side
 so you can reload dynamic libraries from any language :)
 
 ```d
-#CLIENT LIBRARY
+//CLIENT LIBRARY
 
 import core.sys.windows.dll;
 import core.stdc.stdio : printf;
@@ -68,39 +76,36 @@ nothrow:
 //Same struct declared on Host
 struct Data
 {
-	int x;
-	int y;
+    int x;
+    int y;
 }
 
 Data* userdata;
 
 void load( void* _userdata )
 {
-	printf("load\n");
-	userdata = cast(UserData*) _userdata;
+    printf("load\n");
+    //capture data coming from Host.
+    userdata = cast(Data*) _userdata;
 }
 void unload(void* userdata){
-	printf("unload\n");
+    printf("unload\n");
 }
 void init(void* userdata){
-	printf("init\n");
+    printf("init\n");
 }
 void uninit(void* userdata){
-	printf("uninit\n");
+    printf("uninit\n");
 }
-
 void update()
 {
     //change value here, recompile and see the changes on the host side :)
-	userdata.value = 10;
+    userdata.value = 10;
 }
 ```
 
-Reloaded was inspired by 
-
-[cr.h](https://github.com/fungos/cr)
-
-### License
+Reloaded was inspired by [cr.h](https://github.com/fungos/cr).
+## License
 
 The MIT License (MIT)
 
