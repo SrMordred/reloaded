@@ -32,6 +32,9 @@ void main()
     update() will call the method with same name at the client side and will reload the library when it changes automatically(and will call load()/unload() when necessary).
     */
 
+    //In case of client crash, code resumes from here. Optional
+    mixin ReloadedCrashReturn;
+
     while(true)
     {
         script.update();
@@ -58,10 +61,15 @@ It receive the userdata;
 
 Can be called at will on the host side (normally inside a loop).
 
-**ReloadeD** will continue to work even if you don´t declare all possible functions.
+**ReloadeD** will work even if you don´t declare all possible functions.
 
-Note that you don´t need **Reloaded** module on the client side
+Note that you don´t need **ReloadeD** module on the client side
 so you can reload dynamic libraries from any language :)
+
+`mixin ReloadedCrashReturn;` (Optional)
+
+This will create a returning point (using `setjpm/longjmp`) from where the program will resume if the code in the client side crash.
+
 
 ```d
 //CLIENT LIBRARY
@@ -104,7 +112,7 @@ void update()
 }
 ```
 
-Reloaded was inspired by [cr.h](https://github.com/fungos/cr).
+**ReloadeD** was inspired by [cr.h](https://github.com/fungos/cr).
 ## License
 
 Boost Software License - Version 1.0 - August 17th, 2003

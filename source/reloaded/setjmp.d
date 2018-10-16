@@ -1,10 +1,24 @@
 module reloaded.setjmp;
 
-alias ubyte[256] jmp_buf;
+version( Windows )
+{
+    version( X86_64 )
+    {
+        alias ubyte[256] jmp_buf;
+    }
+    else version( X86 )
+    {
+        alias ubyte[128] jmp_buf;
+    }
+    extern(C): nothrow: @nogc:
 
-extern(C): nothrow: @nogc:
+    int  _setjmp(ref jmp_buf, void*);
+    void longjmp(ref jmp_buf, int);
 
-int  _setjmp(ref jmp_buf, void*);
-void longjmp(ref jmp_buf, int);
+    alias setjmp = _setjmp;
+}
+else
+{
+    import core.sys.posix : setjmp, longjmp;
+}
 
-alias setjmp = _setjmp;

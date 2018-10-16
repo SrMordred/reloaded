@@ -1,25 +1,61 @@
 module reloaded.reloaded;
 
-// void __error_handler( int code )
-// {
-// {
-// 	import core.stdc.stdio;
-// 	import core.stdc.signal;
+import reloaded.setjmp;
 
-//     enum ERROR_MSG = 
-//     [
-//         SIGABRT = "Signal Abort",
-//         SIGFPE = "Signal Floating-Point Exception",
-//         SIGILL = "Signal Illegal Instruction",
-//         SIGINT = "Signal Interrupt",
-//         SIGSEGV = "Signal Segmentation Violation",
-//         SIGTERM = "Signal Terminate",
-//     ];
-
-// 	printf("Program crash with signal :'%s'(%d)\n",ERROR_MSG[code], code);
-// 	longjmp(env, 1);
-// }
 public:
+
+mixin template ReloadedCrashReturn()
+{
+    import core.stdc.signal;
+    import reloaded.setjmp : setjmp, jmp_buf;
+
+    static jmp_buf __crash_return_buffer;
+
+    extern(C) @nogc nothrow
+    static void __crash_return_handler(int code)
+    {
+        import core.stdc.stdio;
+    	import core.stdc.signal;
+        import reloaded.setjmp : longjmp;
+
+        enum ERROR_MSG = 
+        [
+            SIGABRT : "Signal Abort",
+            SIGFPE : "Signal Floating-Point Exception",
+            SIGILL : "Signal Illegal Instruction",
+            SIGINT : "Signal Interrupt",
+            SIGSEGV : "Signal Segmentation Violation",
+            SIGTERM : "Signal Terminate",
+        ];
+
+        printf("ReloadeD Client crashed with signal :");
+
+        switch(code)
+        {
+            case SIGABRT: printf("Abort"); break;
+            case SIGFPE: printf("Floating-Point Exception"); break;
+            case SIGILL: printf("Illegal Instruction"); break;
+            case SIGINT: printf("Interrupt"); break;
+            case SIGSEGV: printf("Segmentation Violation"); break;
+            case SIGTERM: printf("Terminate"); break;
+            default:
+                printf("Unknown (%d) ", code);
+            break;
+        }
+
+    	printf("\n",);
+    	longjmp(__crash_return_buffer, 1);
+    }
+    version(Windows)
+    {
+        auto __crash_return_code = setjmp(__crash_return_buffer, null);
+    }
+    else
+    {
+        auto __crash_return_code = setjmp(__crash_return_buffer);
+    }
+    auto __crash_return_noop = {signal(SIGSEGV, &__crash_return_handler ); return false; }();
+}
 
 struct Reloaded
 {
@@ -44,6 +80,8 @@ struct Reloaded
     string[2]       lib_swaps;
 	bool            lib_swaps_v = 0;
 
+    
+
 	this(T)(string lib_path, auto ref T userdata)
 	{
         load( lib_path, userdata );
@@ -52,6 +90,7 @@ struct Reloaded
     void load(T)(string lib_path, auto ref T userdata)
     {
         import std.path : stripExtension, extension;
+
         this.lib_path = lib_path;
         this.userdata = cast(void*)&userdata;
 		fw = FileWatch(lib_path);
@@ -167,9 +206,5 @@ struct Reloaded
                 load( userdata );
 
         }
-
-        // auto remove_lib_tmp = lib_swaps[cast(size_t)lib_swaps_v];
-		// if( remove_lib_tmp.exists )
-		// 	remove_lib_tmp.remove;
     }
 }

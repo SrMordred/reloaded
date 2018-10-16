@@ -1,10 +1,14 @@
 //COMPILE AS LIBRARY
 import core.sys.windows.dll;
-import core.stdc.stdio : printf;
 mixin SimpleDllMain;
+
 
 extern(C):
 nothrow:
+
+
+import core.stdc.stdio : printf;
+
 struct UserData
 {
 	int x;
@@ -30,5 +34,7 @@ void uninit(void* userdata){
 void update()
 {
 	userdata.x = 10;
-	userdata.y = 20;
+	userdata.y = 40;
+	// int* x;
+	// *x = 10;
 }

@@ -8,11 +8,14 @@ struct UserData
 }
 //Receive as first argument the lib path
 //eg: app.exe client/client.dll
+
+
 void main( string[] args )
-{
+{	
+
 	if(args.length >= 2)
 	{
-		import reloaded : Reloaded;
+		import reloaded : Reloaded, ReloadedCrashReturn;
 		import core.stdc.stdlib : system;
 		import core.thread;
 
@@ -24,7 +27,6 @@ void main( string[] args )
 		script.load( lib_path, userdata );
 
 		mixin ReloadedCrashReturn;
-
 		while(true)
 		{
 			script.update;
