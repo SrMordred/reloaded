@@ -79,7 +79,6 @@ import core.stdc.stdio : printf;
 mixin SimpleDllMain;
 
 extern(C):
-nothrow:
 
 //Same struct declared on Host
 struct Data

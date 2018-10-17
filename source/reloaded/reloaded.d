@@ -63,13 +63,13 @@ struct Reloaded
 	import fswatch : FileWatch, FileChangeEventType;
     import std.typecons : Flag, Yes, No;
 
-    static nothrow void noop(){}
+    static void noop(){}
 
-    alias extern_init   = nothrow void function(void*);
-    alias extern_uninit = nothrow void function(void*);
-    alias extern_load   = nothrow void function(void*);
-    alias extern_unload = nothrow void function(void*);
-    alias extern_update = nothrow void function();
+    alias extern_init   = void function(void*);
+    alias extern_uninit = void function(void*);
+    alias extern_load   = void function(void*);
+    alias extern_unload = void function(void*);
+    alias extern_update = void function();
 
 	SharedLib       lib;
 	extern_update   update_fun;

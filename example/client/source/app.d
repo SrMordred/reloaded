@@ -4,8 +4,6 @@ mixin SimpleDllMain;
 
 
 extern(C):
-nothrow:
-
 
 import core.stdc.stdio : printf;
 
