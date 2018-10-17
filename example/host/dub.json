@@ -5,5 +5,8 @@
 		"Patric"
 	],
 	"copyright": "Copyright © 2018, Patric",
-	"name": "host"
+	"name": "host",
+	"dependencies": {
+		"reloaded": "~master"
+	}
 }

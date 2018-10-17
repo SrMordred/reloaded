@@ -10,5 +10,5 @@
 		"derelict-util": "~>3.0.0-beta.2",
 		"fswatch": "~>0.3.0"
 	},
-	"targetType": "executable",
+	"targetType": "library"
 }

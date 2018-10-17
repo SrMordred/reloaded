@@ -12,7 +12,7 @@ void main( string[] args )
 {
 	if(args.length >= 2)
 	{
-		import reloaded : Reloaded;
+		import reloaded : Reloaded, ReloadedCrashReturn;
 		import core.stdc.stdlib : system;
 		import core.thread;
 
