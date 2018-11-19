@@ -1,14 +1,14 @@
-i{
- "description": "Live Reloading D code with dynamic libraries",
- "license": "boost",
- "authors": [
-  "Patric Dexheimer"
- ],
- "copyright": "Copyright © 2018, Patric Dexheimer",
- "name": "reloaded",
- "dependencies": {
-  "derelict-util": "~>3.0.0-beta.2",
-  "fswatch": "~>0.3.0"
- },
- "targetType": "library"
+{
+	"description": "Live Reloading D code with dynamic libraries",
+	"license": "boost",
+	"authors": [
+		"Patric Dexheimer"
+	],
+	"copyright": "Copyright Â© 2018, Patric Dexheimer",
+	"name": "reloaded",
+	"dependencies": {
+		"derelict-util": "~>3.0.0-beta.2",
+		"fswatch": "~>0.3.0"
+	},
+	"targetType": "library"
 }
