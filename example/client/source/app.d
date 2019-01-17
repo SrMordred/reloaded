@@ -1,7 +1,9 @@
 //COMPILE AS LIBRARY
-import core.sys.windows.dll;
-mixin SimpleDllMain;
 
+version(Windows) {
+  import core.sys.windows.dll;
+  mixin SimpleDllMain;
+}
 
 extern(C):
 

@@ -7,7 +7,7 @@
 	"copyright": "Copyright © 2018, Patric",
 	"name": "client",
 	"targetType": "dynamicLibrary",
-	"sourceFiles": [
+	"sourceFiles-windows": [
 		"client.def"
 	]
 }
