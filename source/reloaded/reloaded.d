@@ -84,7 +84,8 @@ struct Reloaded
 
 	this(T)(string lib_path, auto ref T userdata)
 	{
-        load( lib_path, userdata );
+		fw = FileWatch(lib_path);
+        	load( lib_path, userdata );
 	}
 
     void load(T)(string lib_path, auto ref T userdata)
@@ -93,7 +94,6 @@ struct Reloaded
 
         this.lib_path = lib_path;
         this.userdata = cast(void*)&userdata;
-		fw = FileWatch(lib_path);
 
         auto base = lib_path.stripExtension;
         auto ext  = lib_path.extension;
