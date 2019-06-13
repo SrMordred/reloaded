@@ -13,3 +13,4 @@ reloaded-test-*
 *.obj
 *.lst
 *.dll
+build.bat
