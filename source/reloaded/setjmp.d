@@ -19,6 +19,6 @@ version( Windows )
 }
 else
 {
-    import core.sys.posix.setjmp : setjmp, longjmp, jmp_buf;
+    public import core.sys.posix.setjmp : setjmp, longjmp, jmp_buf;
 }
 
